@@ -1,59 +1,37 @@
-Feature Selection 
+CODE BOOK 
 =================
 
-The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+BACKGROUND
 
-Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+RAW DATA FOLDER STRUCTURE
+The "UCI HAR Dataset" folder contains the following subfolder and files:
 
-Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+* README.txt - the original REAME file that describes the background of the experiment and the original data set. This file is copied to the current repo and renamed to "originalData_README.txt." 
+* features_info.txt - the file describes features selected for the original data set from the accelerometer and gyroscope 3-axial raw signals. This file is copied to the current repo as a reference as the cleaned data variables uses similar nomenclature. The copied file is renamed to "originalData_features_info.txt"
+* features.txt - the complete list of variables of each feature vector. This file is also copied to the current repo for reference. The copied file is renamed to "originalData_features.txt"
+* activity_labels.txt - the file contains names of 6 different activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) the volunteers (subjects) perfromted while wearing the Samsung Galaxy S II smartphone. 
+* train - the folder contains data from 21 randomly selected volunteers used as the training data, which contains the "X_train.txt" file that stores all 561 feature values for each observation, the "subject_train.txt" file that stores the subject id of each observation, and the "y_train.txt" file that stores the activities of each observation using numbers 1 to 6.
+* test - the folder contains data from the rest 9 volunteers used as the test data, which contains the "Y_train.txt" file that stores all 561 feature values for each observation, the "subject_test.txt" file that stores the subject id of each observation, and the "y_test.txt" file that stores the activities of each observation using numbers 1 to 6.
+  
+TRANSFORMATION PROCESS
+The "run_analysis.R" first combines "X_train.txt", "subject_train.txt", and "y_train.txt" from the train subfolder column-wise to create a training data object "train". Then the script combines "X-test.txt", "subject_test.txt", and "y_test.txt" from the test subfolder column-wise to create a test data object "test." The two data objects is then combined row-wise to make one data set called "data". A selection of "mean" and "standard deviation (std)" features only is performed using R regular expression searching for features containing "mean()" and "std()", resulting a total of 66 features selected. The previous "data" object is subset by only using the 66 selected features. The activity names are replaced by actual names (e.g. WALKING) instead of numbers to be more intuitive. The variable names are minorly modified to remove "()" and replaced "-" with "." to make them R valid names. I think the variable names are already too long in length so to make the data frame more readable I decide to keep most the original abbreviations that are described in details in the following "DATA DICTIONARY" section. Finally a new tidy data set is created using the average of each variable for each activity and each subject. 
 
-These signals were used to estimate variables of the feature vector for each pattern:  
-'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+DATA DICTIONARY
+The final data is a table of 180 rows x 68 columns. The 180 rows represent observations of each subgroup of unique subject/activity combination. The 68 columns include:
 
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
+Column 1 - Subject id of 30 volunteers
 
-The set of variables that were estimated from these signals are: 
+Column 2 - Activity (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING)
 
-mean(): Mean value
-std(): Standard deviation
-mad(): Median absolute deviation 
-max(): Largest value in array
-min(): Smallest value in array
-sma(): Signal magnitude area
-energy(): Energy measure. Sum of the squares divided by the number of values. 
-iqr(): Interquartile range 
-entropy(): Signal entropy
-arCoeff(): Autorregresion coefficients with Burg order equal to 4
-correlation(): correlation coefficient between two signals
-maxInds(): index of the frequency component with largest magnitude
-meanFreq(): Weighted average of the frequency components to obtain a mean frequency
-skewness(): skewness of the frequency domain signal 
-kurtosis(): kurtosis of the frequency domain signal 
-bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
-angle(): Angle between to vectors.
+Columns 3 to 68 - Average of 66 selected mean or std features in the following format: Avg.[FEATURE].[Mean|Std]{.[X|Y|Z]}
 
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+[FEATURE] - includes features from the accelerometer (denoted by Acc), gyroscope (denoted by Gyro) 3-axial raw signals. The prefix 't' denotes time domain signals and 'f' denotes frequency domain signals. The acceleration signal was separated into body (denoted by "Body") and gravity (denoted by "Gravity") acceleration signals. The Jerk (denoted by "Jery") signals derives from the body linear acceleration and angular velocity. The magnitude (denoted by "Mag") of three-dimensional signals were calculated using the Euclidean norm.
 
-gravityMean
-tBodyAccMean
-tBodyAccJerkMean
-tBodyGyroMean
-tBodyGyroJerkMean
+[Mean|Std] - choose from either "Mean" or "Std"
 
-The complete list of variables of each feature vector is available in 'variables.txt'
+{.[X|Y|Z]} - only appears in some features. Representing the 3-axial signals in the "X", "Y", and "Z" directions.
+
+For example, 
+Avg.tBodyAcc.Mean.X denotes Average of mean time domained Body Acceleration Signal on X-xais
+
+The complete list of variables is contained in the 'variables.txt' in this repo.
