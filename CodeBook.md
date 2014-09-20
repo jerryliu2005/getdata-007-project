@@ -1,9 +1,8 @@
 CODE BOOK 
 =================
 
-BACKGROUND
+##RAW DATA FOLDER STRUCTURE
 
-RAW DATA FOLDER STRUCTURE
 The "UCI HAR Dataset" folder contains the following subfolder and files:
 
 * README.txt - the original REAME file that describes the background of the experiment and the original data set. This file is copied to the current repo and renamed to "originalData_README.txt." 
@@ -13,10 +12,12 @@ The "UCI HAR Dataset" folder contains the following subfolder and files:
 * train - the folder contains data from 21 randomly selected volunteers used as the training data, which contains the "X_train.txt" file that stores all 561 feature values for each observation, the "subject_train.txt" file that stores the subject id of each observation, and the "y_train.txt" file that stores the activities of each observation using numbers 1 to 6.
 * test - the folder contains data from the rest 9 volunteers used as the test data, which contains the "Y_train.txt" file that stores all 561 feature values for each observation, the "subject_test.txt" file that stores the subject id of each observation, and the "y_test.txt" file that stores the activities of each observation using numbers 1 to 6.
   
-TRANSFORMATION PROCESS
+##TRANSFORMATION PROCESS
+
 The "run_analysis.R" first combines "X_train.txt", "subject_train.txt", and "y_train.txt" from the train subfolder column-wise to create a training data object "train". Then the script combines "X-test.txt", "subject_test.txt", and "y_test.txt" from the test subfolder column-wise to create a test data object "test." The two data objects is then combined row-wise to make one data set called "data". A selection of "mean" and "standard deviation (std)" features only is performed using R regular expression searching for features containing "mean()" and "std()", resulting a total of 66 features selected. The previous "data" object is subset by only using the 66 selected features. The activity names are replaced by actual names (e.g. WALKING) instead of numbers to be more intuitive. The variable names are minorly modified to remove "()" and replaced "-" with "." to make them R valid names. I think the variable names are already too long in length so to make the data frame more readable I decide to keep most the original abbreviations that are described in details in the following "DATA DICTIONARY" section. Finally a new tidy data set is created using the average of each variable for each activity and each subject. 
 
-DATA DICTIONARY
+##DATA DICTIONARY
+
 The final data is a table of 180 rows x 68 columns. The 180 rows represent observations of each subgroup of unique subject/activity combination. The 68 columns include:
 
 Column 1 - Subject id of 30 volunteers
