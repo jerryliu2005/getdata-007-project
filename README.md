@@ -35,7 +35,9 @@ USAGE
 5. run source("run_analysis.R")
 6. The final result data set is stored in the R object "data2." Also there is a tab-delimited text file "data.txt" created in the current directory.
 
-The CodeBook.md fiel is a code book that describes the variables, the data, and any transformations the "run_analysis.R" performed to clean up the data.   
+The final "data2" object is a data.frame with 180 rows x 68 columns dimension. The 180 observation is a combination from 30 subjects and each of the 6 activities. The first column is the "Subject". The second column is the "Activity." All following columns are averages of each selected mean and standard deviation variables from the raw data.   
+
+The CodeBook.md file is a code book that describes the variables, the data, and any transformations the "run_analysis.R" performed to clean up the data.   
 
 To reuse the cleaned data in the future you can simply read in the data using the command:
  data<-read.table("data.txt", header=TRUE, check.names=F, sep="\t")
