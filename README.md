@@ -1,17 +1,18 @@
 getdata-007-project
 ===================
-WHAT IS ABOUT
+
+##WHAT IS ABOUT
 
 This is a repository of the R code "run_analysis.R" and the code book that is used to create a tidy data set per requirement of the Cousera course "Getting and Cleaning Data" course project. The course URL is https://class.coursera.org/getdata-007/.
 
-RAW DATA 
+##RAW DATA 
 
 The original data is "wearable" data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 The actual data can be downloaded at:
   https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-REQUIREMENT
+##REQUIREMENT
 
 The final "tidy" data should satisfy the rules set and explained in details in Hadley Wickham's artical of "Tidy Data" (http://vita.had.co.nz/papers/tidy-data.pdf) including:
 1. Each variable forms a column.
@@ -26,7 +27,7 @@ The requirement is that the "run_analysis.R" script can clean and tidy up the ra
 4. Appropriately labels the data set with descriptive variable names. 
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
  
-USAGE
+##USAGE
 
 1. Download the raw data zip file using the link in the RAW DATA section. Unzip the data zip file and it will create a data folder called "UCI HAR Dataset". On your computer change directory to "UCI HAR Dataset". Download the "run_analysis.R" under this data directory. 
 2. Open R terminal or RStudio
@@ -41,7 +42,4 @@ The CodeBook.md file is a code book that describes the variables, the data, and 
 
 To reuse the cleaned data in the future you can simply read in the data using the command:
  data<-read.table("data.txt", header=TRUE, check.names=F, sep="\t")
-
-
-
 
