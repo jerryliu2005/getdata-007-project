@@ -7,7 +7,6 @@ activity_labels<-read.table("activity_labels.txt", stringsAsFactors = F)
 activity_labels<-activity_labels$V2
 
 ## Step 1. Merges the training and the test sets to create one data set.
-
 # Create data for training subjects variables
 X_train<-read.table("train/X_train.txt", stringsAsFactors = F)
 names(X_train)<-feature_name
@@ -54,8 +53,12 @@ names(data)<-colnames
 
 ## Step5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 library(plyr)
+# Group data by Subject and Activity and apply column mean to each subset.
 data2<- ddply(data, .(subject, activity), numcolwise(mean))
+# Reset the meaningful activity names
 levels(data2$activity)<-activity_labels
-
+# Append prefix of Avg. to feature names to indicate the variables are average of means or stds
+names(data2)<-c("Subject", "Activity", paste("Avg.", names(data2)[3:ncol(data2)], sep=""))
+# Write data out to tab-delimited text file
 write.table(data2, "data.txt", quote=FALSE, row.names=FALSE, sep="\t")
 
